@@ -13,7 +13,7 @@ public:
             if(c<0) c=0;
             if(cc>0)    cc=0;
         }
-        mini=abs(mini);
-        return max(mini,maxi);
+        // mini=abs(mini);
+        return max(abs(mini),maxi);
     }
 };
