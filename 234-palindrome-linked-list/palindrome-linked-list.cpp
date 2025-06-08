@@ -10,17 +10,38 @@
  */
 class Solution {
 public:
-    bool isPalindrome(ListNode* head) {
-        stack<int> st;
-        for (ListNode* curr = head; curr != nullptr; curr = curr->next) {
-            st.push(curr->val); 
+    //helper func to reverse the list
+    ListNode* reverseList(ListNode* head){
+        ListNode* prev=NULL;
+        ListNode* curr=head;
+        while(curr!=NULL){
+            ListNode* nextNode=curr->next;
+            curr->next=prev;
+            prev=curr;
+            curr=nextNode;
         }
-        for (ListNode* curr = head; curr != nullptr; curr = curr->next) {
-            if (st.top() != curr->val) 
+        return prev;
+    }
+    bool isPalindrome(ListNode* head) {
+        if(!head || !head->next) return true;
+        ListNode *slow=head;
+        ListNode *fast=head;
+        while(fast->next && fast->next->next){
+            slow=slow->next;
+            fast=fast->next->next;
+        }
+        //sec half ko rev karo
+        ListNode* secondHalf = reverseList(slow->next);
+        //compare first half and sec half
+        ListNode *firstHalf=head;
+        ListNode *secondHalfCopy=secondHalf;
+        while(secondHalf){
+            if(firstHalf->val != secondHalf->val){
                 return false;
-            st.pop();
+            }
+            firstHalf=firstHalf->next;
+            secondHalf=secondHalf->next;
         }
         return true;
-        
     }
 };
